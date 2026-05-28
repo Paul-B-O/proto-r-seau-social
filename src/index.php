@@ -30,6 +30,9 @@ $controller = new Controller();
 $type = $parts[0] ?? 'home';
 $path = implode('/', array_slice($parts, 1));
 
+if ($type === "favicon.ico")
+    exit;
+
 switch ($type) {
     case "api":
         $controller->api($path);
@@ -38,6 +41,6 @@ switch ($type) {
         $controller->image($path ?: 'index');
         break;
     default:
-    $fullPath = $uri ?: 'home';
-    $controller->view($fullPath);
+        $fullPath = $uri ?: 'home';
+        $controller->view($fullPath);
 }

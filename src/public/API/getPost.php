@@ -20,9 +20,10 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 
 try {
-    $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture FROM posts p
+    $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
         INNER JOIN users u ON u.id = p.user_id
-        ORDER BY p.created_at DESC LIMIT 10");
+        LEFT JOIN user_likes ul ON ul.post_id = p.id
+        GROUP BY p.id, u.username, u.nickname, u.profile_picture ORDER BY p.created_at DESC LIMIT 10");
 
     echo json_encode([
         'success' => true,

@@ -328,8 +328,16 @@
             $make("div", content, {className: "text", textContent: post.content});
             $make("div", content, {className: "date", textContent: post.created_at});
             const footer = $make("div", content, {className: "tweet-footer"});
-            const likeBtn = $make("button", footer, {className: "like-btn", textContent: "❤️ Like"});
+            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `❤️ ${post.like_count}`});
             //TODO: add action when the like button is pressed
+
+            likeBtn.addEventListener("click", async () => {
+                const result = await likePost(post.id);
+                if (result.success) {
+                    likeBtn.textContent = `❤️ ${result.like_count}`;
+                }
+            });
+
             return postDiv;
         }
 
@@ -347,6 +355,18 @@
                     container.appendChild(makePost(post))
                 }
             }
+        }
+
+        async function likePost(postId) {
+            const res = await fetch("api/likePost",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ postId })
+            });
+
+            return await res.json();
         }
 
         getLastPost();
