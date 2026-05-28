@@ -6,23 +6,16 @@ use Database\Database;
 
 session_start();
 
-// Exemple : instanciation de ta DB (à adapter)
 $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // ======================
-    // 1. Récupération données
-    // ======================
     $nickname  = trim($_POST['nickname'] ?? '');
     $username  = trim($_POST['username'] ?? '');
     $password  = $_POST['password'] ?? '';
 
-    // ======================
-    // 2. VALIDATION
-    // ======================
 
     // pseudo
     if (strlen($nickname) < 3 || strlen($nickname) > 30) {

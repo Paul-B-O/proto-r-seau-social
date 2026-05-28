@@ -22,20 +22,28 @@ $data = json_decode(file_get_contents("php://input"), true);
 try {
 
     $username = trim($_POST['username'] ?? '');
+    $postId = trim($_POST['postId'] ?? '');
 
-    if ($username === "") {
+    if ($username !== "") {
+
         $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
             INNER JOIN users u ON u.id = p.user_id
             LEFT JOIN user_likes ul ON ul.post_id = p.id
-            GROUP BY p.id, u.username, u.nickname, u.profile_picture ORDER BY p.created_at DESC LIMIT 10");
-
+            WHERE u.username = :username",
+            ['username' => $username]
+        );
+    } else if ($postId !== "") {
+        $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
+            INNER JOIN users u ON u.id = p.user_id
+            LEFT JOIN user_likes ul ON ul.post_id = p.id
+            WHERE p.id = :post_id",
+            ['post_id' => $postId]
+        );
     } else {
         $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
             INNER JOIN users u ON u.id = p.user_id
             LEFT JOIN user_likes ul ON ul.post_id = p.id
-            WHERE p.username = :username",
-            ['username' => $username]
-        );
+            GROUP BY p.id, u.username, u.nickname, u.profile_picture ORDER BY p.created_at DESC LIMIT 10");
     }
 
 

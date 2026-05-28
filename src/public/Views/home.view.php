@@ -245,13 +245,12 @@
         <!-- TOP BAR -->
         <div class="topbar">
 
-            <a class="profile-btn" href="/profil.php">
-                <img src="image/default.png">
+            <a class="profile-btn" href="/profile?username=<?= $user['username'] ?>">
+                <img src="<?= $user['profile_picture'] ?? "/image/default.png" ?>">
                 <div>@toi</div>
             </a>
 
             <div class="menu">
-                <button>Compte</button>
 
                 <a href="logout"><button>Déconnexion</button></a>
             </div>
@@ -304,8 +303,10 @@
             const result = await res.json();
             console.log(result);
 
-            if (result.sucess) {
+            if (result.success) {
                 tweetBox.value = "";
+                const post = await getNewPost();
+                container.insertBefore(makePost(post), container.children[3]);
             }
         });
 
@@ -329,6 +330,21 @@
             });
 
             return postDiv;
+        }
+
+        async function getNewPost(postId) {
+            const res = await fetch("api/getPost", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({postId})
+            });
+
+            const result = await res.json();
+            if (result.success) {
+                return result.posts[0];
+            }
         }
 
         async function getLastPost() {
@@ -360,6 +376,12 @@
         }
 
         getLastPost();
+
+        // Actualisation brut à changer
+        setInterval(() => {
+            container.innerHTML = ``;
+            getLastPost();
+        })
 
     </script>
 
