@@ -35,7 +35,7 @@ if ($type === "favicon.ico")
 
 switch ($type) {
     case "api":
-        $controller->api($path);
+        $controller->api($type, $path);
         break;
     case "image":
         $controller->image($path ?: 'index');

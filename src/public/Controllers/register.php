@@ -39,9 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Le mot de passe doit contenir au moins 6 caractères.";
     }
 
-    // ======================
-    // 3. Vérifier doublons
-    // ======================
     if (empty($errors)) {
 
         $existing = $db->select(
@@ -54,9 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // ======================
-    // 4. INSERT USER
-    // ======================
     if (empty($errors)) {
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

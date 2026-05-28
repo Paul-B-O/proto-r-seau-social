@@ -9,7 +9,7 @@ class Controller
         require ROOT . '/src/public/Controllers/' . $path . '.php';
     }
 
-    public function api($path, $data = []) {
+    public function api($type, $path, $data = []) {
         extract($data);
         require ROOT . '/src/public/API/' . $path . '.php';
     }

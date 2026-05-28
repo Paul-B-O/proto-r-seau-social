@@ -7,5 +7,5 @@ if (empty($_SESSION['user_id'])) {
 }
 
 
-require_once ROOT."/src/public/Views/home.view.php";
+require_once ROOT."/src/public/Views/noProfile.view.php";
 

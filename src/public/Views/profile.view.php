@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Réseau IIA</title>
+    <title>Profil</title>
 
     <style>
         body {
@@ -18,7 +18,7 @@
             padding: 0 20px;
         }
 
-        /* CENTRE */
+        /* TIMELINE */
         .container {
             width: 520px;
             background: white;
@@ -36,114 +36,76 @@
         /* HEADER */
         header {
             padding: 15px;
-            font-weight: bold;
             border-bottom: 1px solid #ddd;
-            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
         }
 
-        /* ===== PROFIL TOP BAR ===== */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
+        /* COVER */
+        .cover {
+            height: 140px;
+            background: #1da1f2;
         }
 
-        .profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: black;
-        }
-
-        .profile-btn img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        /* MENU LOGIN */
-        .menu {
-            position: relative;
-        }
-
-        .menu button {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 5px 10px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 35px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            width: 150px;
-            z-index: 10;
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: black;
-            font-size: 14px;
-        }
-
-        .dropdown a:hover {
-            background: #f0f0f0;
-        }
-
-        .menu:hover .dropdown {
-            display: block;
-        }
-
-        /* ===== TWEET FORM UNIFIÉ ===== */
-        .tweet-form {
+        /* PROFILE */
+        .profile {
             padding: 15px;
             border-bottom: 10px solid #f0f0f0;
         }
 
-        .tweet-box {
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 10px;
-            background: #fff;
+        .profile-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
 
-        .tweet-box textarea {
-            width: 100%;
-            border: none;
-            resize: none;
-            height: 60px;
-            outline: none;
+        .profile-picture {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-top: -45px;
+            background: white;
+        }
+
+        .edit-btn {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nickname {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .username {
+            color: gray;
+            margin-top: 2px;
+        }
+
+        .bio {
+            margin-top: 12px;
+            line-height: 1.4;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 12px;
+            color: gray;
             font-size: 14px;
         }
 
-        .tweet-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
+        .profile-stats strong {
+            color: black;
         }
 
-        .tweet-actions button {
-            background: #1da1f2;
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        /* TWEET */
+        /* POSTS */
         .tweet {
             display: flex;
             padding: 15px;
@@ -165,7 +127,7 @@
             font-weight: bold;
         }
 
-        .username {
+        .user span {
             color: gray;
             font-weight: normal;
             margin-left: 5px;
@@ -176,41 +138,44 @@
         }
 
         .date {
-            margin-top: 6px;
-            font-size: 12px;
+            margin-top: 8px;
             color: gray;
+            font-size: 12px;
         }
 
-        /* ACTIONS TWEET */
         .tweet-footer {
             display: flex;
             gap: 15px;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .like-btn {
             border: none;
             background: none;
-            cursor: pointer;
             color: gray;
+            cursor: pointer;
         }
 
         .like-btn:hover {
             color: red;
         }
 
-        /* SUGGESTIONS */
-        .suggestions {
+        /* SIDEBAR */
+        .card {
             background: white;
-            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin-top: 0;
         }
 
         .suggestion {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .suggestion img {
@@ -220,19 +185,18 @@
             margin-right: 8px;
         }
 
-        .follow {
+        .follow-btn {
             margin-left: auto;
+            border: none;
             background: black;
             color: white;
-            border: none;
-            padding: 5px 10px;
             border-radius: 20px;
-            font-size: 12px;
+            padding: 5px 12px;
             cursor: pointer;
         }
     </style>
-</head>
 
+</head>
 <body>
 
 <div class="page">
@@ -240,43 +204,52 @@
     <!-- CENTRE -->
     <div class="container">
 
-        <header>Réseau IIA</header>
+        <header>Profil</header>
 
-        <!-- TOP BAR -->
-        <div class="topbar">
+        <!-- COVER -->
+        <div class="cover"></div>
 
-            <a class="profile-btn" href="/profil.php">
-                <img src="image/default.png">
-                <div>@toi</div>
-            </a>
+        <!-- PROFILE -->
+        <div class="profile">
 
-            <div class="menu">
-                <button>Compte</button>
+            <div class="profile-top">
 
-                <a href="logout"><button>Déconnexion</button></a>
+                <img
+                    class="profile-picture"
+                    src="<?= $user['profile_picture'] ?? "/image/default.png" ?>"
+                >
+
+                <?php if ($_SESSION['id'] === $user['id']) : ?>
+                <button class="edit-btn">
+                    Modifier le profil
+                </button>
+                <?php endif; ?>
+
+            </div>
+
+            <div class="nickname">
+                <?= $user['nickname'] ?>
+            </div>
+
+            <div class="username">
+                @<?= $user['username'] ?>
+            </div>
+
+            <div class="bio">
+            </div>
+
+            <div class="profile-stats" style="display: none">
+                <div><strong>124</strong> abonnements</div>
+                <div><strong>3,2k</strong> abonnés</div>
             </div>
 
         </div>
 
-        <!-- FORMULAIRE -->
-        <div class="tweet-form">
-
-            <div class="tweet-box">
-                <textarea placeholder="Quoi de neuf ?"></textarea>
-
-                <div class="tweet-actions">
-                    <span style="color:gray;font-size:12px;">0/280</span>
-                    <button>Tweet</button>
-                </div>
-            </div>
-
-        </div>
-        
-
-    </div>
-
-
+        <!-- POSTS -->
     <script>
+
+        const container = document.querySelector(".container");
+
         function $make(tagName, parent, props) {
             const elt = document.createElement(tagName);
             if (parent != null) parent.appendChild(elt);
@@ -287,27 +260,6 @@
             }
             return elt;
         }
-
-        const tweetBox = document.querySelector(".tweet-box textarea");
-        const sendBtn = document.querySelector(".tweet-actions button");
-        const container = document.querySelector(".container");
-
-        sendBtn.addEventListener("click", async () => {
-            const content = tweetBox.value;
-            const res = await fetch("api/newPost",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({content})
-            });
-            const result = await res.json();
-            console.log(result);
-
-            if (result.sucess) {
-                tweetBox.value = "";
-            }
-        });
 
         function makePost(post) {
             const postDiv = $make("div", null, { className: "tweet" });
@@ -332,14 +284,17 @@
         }
 
         async function getLastPost() {
+            const username = new URLSearchParams(location.search).get("username");
             const res = await fetch("api/getPost", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
+                body: JSON.stringify({username: username})
             });
 
             const result = await res.json();
+            console.log(result);
             if (result.success) {
                 for (const post of result.posts) {
                     container.appendChild(makePost(post))
@@ -347,20 +302,7 @@
             }
         }
 
-        async function likePost(postId) {
-            const res = await fetch("api/likePost",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ postId })
-            });
-
-            return await res.json();
-        }
-
         getLastPost();
-
     </script>
 
 </div>
