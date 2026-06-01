@@ -6,9 +6,6 @@ session_start();
 
 header('Content-Type: application/json');
 
-// ======================
-// 1. Vérification login
-// ======================
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([
         'success' => false,

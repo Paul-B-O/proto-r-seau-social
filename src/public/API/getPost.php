@@ -47,9 +47,7 @@ try {
                 FROM posts p
                 INNER JOIN users u
                     ON u.id = p.user_id
-            
                 WHERE u.username = :username
-            
                 ORDER BY p.created_at DESC",
             [
                 'username' => $username,
@@ -59,9 +57,9 @@ try {
     } else if ($postId !== "") {
         $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
             INNER JOIN users u ON u.id = p.user_id            ,
-
             LEFT JOIN user_likes ul ON ul.post_id = p.id
-            WHERE p.id = :post_id",
+            WHERE p.id = :post_id
+            GROUP BY p.id",
             ['post_id' => $postId]
         );
     } else {
@@ -75,6 +73,7 @@ try {
             FROM posts p
             INNER JOIN users u ON u.id = p.user_id
             LEFT JOIN user_likes ul ON ul.post_id = p.id
+            GROUP BY p.id
             ORDER BY p.created_at DESC",
             ['current_user_id' => $_SESSION['user_id']]);
     }
