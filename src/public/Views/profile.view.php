@@ -228,7 +228,7 @@
 
                 <img
                     class="profile-picture"
-                    src="<?= htmlspecialchars($user['profile_picture']) ?: "/imagew/default.png" ?>"
+                    src="<?= htmlspecialchars($user['profile_picture']) ?: "/image/default.png" ?>"
                 >
 
                 <?php if ($_SESSION['user_id'] == $user['id']):  ?>
@@ -319,7 +319,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({username: username})
+                body: JSON.stringify({ username })
             });
 
             const result = await res.json();
@@ -328,6 +328,8 @@
                 for (const post of result.posts) {
                     container.appendChild(makePost(post))
                 }
+            } else {
+                console.log(result)
             }
         }
 

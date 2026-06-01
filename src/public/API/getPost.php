@@ -19,10 +19,10 @@ $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 $data = json_decode(file_get_contents("php://input"), true);
 
 
-try {
 
-    $username = trim($_POST['username'] ?? '');
-    $postId = trim($_POST['postId'] ?? '');
+try {
+    $username = trim($data['username'] ?? '');
+    $postId = trim($data['postId'] ?? '');
 
     if ($username !== "") {
         $posts = $db->select(
