@@ -54,4 +54,4 @@ CREATE TABLE IF NOT EXISTS user_likes (
     ON DELETE CASCADE
 );
 
-INSERT INTO OR IGNORE roles (role_label, role_id) VALUES ("Administrateur", "admin");
+INSERT IGNORE roles (role_label, role_id) VALUES ("Administrateur", "admin");

@@ -82,15 +82,25 @@ try {
         $posts[$i]['isMyPost'] = $posts[$i]["user_id"] === $_SESSION['user_id'];
     }
 
+    $isAdmin = $db->select("SELECT EXISTS (
+                SELECT 1 FROM user_have_role uhr
+                INNER JOIN users u ON u.id = uhr.user_id
+                INNER JOIN roles r ON r.id = uhr.role_id
+                WHERE r.role_id = 'admin' AND u.id = :user_id
+            ) as is_admin",
+        ["user_id" => $_SESSION["user_id"]]
+    )[0]["is_admin"];
+
     echo json_encode([
         'success' => true,
-        'posts' => $posts
+        'posts' => $posts,
+        "isAdmin" => $isAdmin
     ]);
 
 } catch (Exception $e) {
 
     echo json_encode([
         'success' => false,
-        'error' => 'Erreur serveur'
+        'error' => 'Erreur serveur'.$e->getMessage()
     ]);
 }

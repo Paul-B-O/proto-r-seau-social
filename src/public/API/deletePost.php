@@ -38,10 +38,17 @@ if (!$exists) {
 }
 
 try {
-
     $post = $db->select("SELECT * FROM posts WHERE id = :postId AND user_id = :user_id", ['postId' => $postId, "user_id" => $_SESSION["user_id"]])[0];
+    $isAdmin = $db->select("SELECT EXISTS (
+                SELECT 1 FROM user_have_role uhr
+                INNER JOIN users u ON u.id = uhr.user_id
+                INNER JOIN roles r ON r.id = uhr.role_id
+                WHERE r.role_id = 'admin' AND u.id = :user_id
+            ) as is_admin",
+    ["user_id" => $_SESSION["user_id"]]
+    )[0]["is_admin"];
 
-    if (!$post) {
+    if (!$post && !$isAdmin) {
         echo json_encode([
             'success' => false,
             'error' => "Vous n'êtes pas l'auteur de ce post"

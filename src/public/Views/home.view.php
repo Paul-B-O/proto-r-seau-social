@@ -305,6 +305,7 @@
         const sendBtn = document.querySelector(".tweet-actions button");
         const container = document.querySelector(".container");
         const charCounter = document.querySelector("#charCounter");
+        var isAdmin = false;
 
         sendBtn.addEventListener("click", async () => {
             const content = tweetBox.value;
@@ -355,8 +356,7 @@
                 }
             });
 
-            console.log(post);
-            if (post.isMyPost) {
+            if (post.isMyPost || isAdmin) {
                 const deleteButton = $make("button", user, {className: "delete-btn", textContent: "🗑"});
                 deleteButton.addEventListener("click", async () => {
                     if (confirm("Vous êtes sur le point de supprimer ce post, êtes vous sûr.e ?")) {
@@ -397,6 +397,7 @@
 
             const result = await res.json();
             if (result.success) {
+                isAdmin = result.isAdmin;
                 for (const post of result.posts) {
                     container.appendChild(makePost(post))
                 }
