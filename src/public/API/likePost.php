@@ -81,6 +81,6 @@ try {
 
     echo json_encode([
         'success' => false,
-        'error' => 'Erreur serveur'.$e->getMessage()
+        'error' => 'Erreur serveur'
     ]);
 }

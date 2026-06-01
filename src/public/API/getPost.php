@@ -78,6 +78,9 @@ try {
             ['current_user_id' => $_SESSION['user_id']]);
     }
 
+    for ($i = 0; $i < count($posts); $i++) {
+        $posts[$i]['isMyPost'] = $posts[$i]["user_id"] === $_SESSION['user_id'];
+    }
 
     echo json_encode([
         'success' => true,

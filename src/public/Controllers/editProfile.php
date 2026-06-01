@@ -118,6 +118,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mkdir($uploadDir, 0755, true);
             }
 
+            if (!empty($user['profile_picture'])) {
+
+                $oldFile = ROOT . '/src/public/uploads/' . basename($user['profile_picture']);
+
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+
             $filename = $user['id'] . '.' . $extension;
 
             $destination = $uploadDir . $filename;

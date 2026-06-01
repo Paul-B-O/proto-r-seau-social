@@ -53,3 +53,5 @@ CREATE TABLE IF NOT EXISTS user_likes (
     REFERENCES posts (id)
     ON DELETE CASCADE
 );
+
+INSERT INTO OR IGNORE roles (role_label, role_id) VALUES ("Administrateur", "admin");

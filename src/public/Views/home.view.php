@@ -230,6 +230,18 @@
             font-size: 12px;
             cursor: pointer;
         }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .delete-btn:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -252,7 +264,9 @@
 
             <div class="menu">
 
-                <a href="logout"><button>Déconnexion</button></a>
+                <a href="logout">
+                    <button>Déconnexion</button>
+                </a>
             </div>
 
         </div>
@@ -270,7 +284,7 @@
             </div>
 
         </div>
-        
+
 
     </div>
 
@@ -294,7 +308,7 @@
 
         sendBtn.addEventListener("click", async () => {
             const content = tweetBox.value;
-            const res = await fetch("api/newPost",{
+            const res = await fetch("api/newPost", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -320,16 +334,19 @@
         });
 
         function makePost(post) {
-            const postDiv = $make("div", null, { className: "tweet" });
+            const postDiv = $make("div", null, {className: "tweet"});
             const link = $make("a", postDiv, {href: `/profile?username=${post.username}`});
             $make("img", link, {src: post.profile_picture ?? "image/default.png", className: "avatar"});
-            const content = $make("div", postDiv, { className: "tweet-content" });
-            const user = $make("div", content, { className: "user", textContent: post.nickname });
-            $make("span", user, { className: "username", textContent: `@${post.username}` });
+            const content = $make("div", postDiv, {className: "tweet-content"});
+            const user = $make("div", content, {className: "user", textContent: post.nickname});
+            $make("span", user, {className: "username", textContent: `@${post.username}`});
             $make("div", content, {className: "text", textContent: post.content});
             $make("div", content, {className: "date", textContent: post.created_at});
             const footer = $make("div", content, {className: "tweet-footer"});
-            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `${post.liked_by_me ? "❤" : "🤍"}️ ${post.like_count}`});
+            const likeBtn = $make("button", footer, {
+                className: "like-btn",
+                textContent: `${post.liked_by_me ? "❤" : "🤍"}️ ${post.like_count}`
+            });
 
             likeBtn.addEventListener("click", async () => {
                 const result = await likePost(post.id);
@@ -337,6 +354,20 @@
                     likeBtn.textContent = `${result.liked_by_me ? "❤" : "🤍"}️ ${result.like_count}`;
                 }
             });
+
+            console.log(post);
+            if (post.isMyPost) {
+                const deleteButton = $make("button", user, {className: "delete-btn", textContent: "🗑"});
+                deleteButton.addEventListener("click", async () => {
+                    if (confirm("Vous êtes sur le point de supprimer ce post, êtes vous sûr.e ?")) {
+                        const result = await deletePost(post.id);
+                        if (result.success) {
+                            postDiv.remove();
+                        }
+                    }
+                });
+            }
+
 
             return postDiv;
         }
@@ -373,15 +404,28 @@
         }
 
         async function likePost(postId) {
-            const res = await fetch("api/likePost",{
+            const res = await fetch("api/likePost", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ postId })
+                body: JSON.stringify({postId})
             });
 
             return await res.json();
+        }
+
+        async function deletePost(postId) {
+            const res = await fetch("api/deletePost", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({postId})
+            });
+
+            return await res.json();
+
         }
 
         getLastPost();
