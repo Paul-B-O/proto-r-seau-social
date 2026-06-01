@@ -25,25 +25,58 @@ try {
     $postId = trim($_POST['postId'] ?? '');
 
     if ($username !== "") {
-
-        $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
-            INNER JOIN users u ON u.id = p.user_id
-            LEFT JOIN user_likes ul ON ul.post_id = p.id
-            WHERE u.username = :username",
-            ['username' => $username]
+        $posts = $db->select(
+            "SELECT
+                    p.*,
+                    u.username,
+                    u.nickname,
+                    u.profile_picture,
+                    (
+                        SELECT COUNT(*)
+                        FROM user_likes ul
+                        WHERE ul.post_id = p.id
+                    ) AS like_count,
+            
+                    EXISTS(
+                        SELECT 1
+                        FROM user_likes ul2
+                        WHERE ul2.post_id = p.id
+                        AND ul2.user_id = :current_user_id
+                    ) AS liked_by_me
+            
+                FROM posts p
+                INNER JOIN users u
+                    ON u.id = p.user_id
+            
+                WHERE u.username = :username
+            
+                ORDER BY p.created_at DESC",
+            [
+                'username' => $username,
+                'current_user_id' => $_SESSION['user_id']
+            ]
         );
     } else if ($postId !== "") {
         $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
-            INNER JOIN users u ON u.id = p.user_id
+            INNER JOIN users u ON u.id = p.user_id            ,
+
             LEFT JOIN user_likes ul ON ul.post_id = p.id
             WHERE p.id = :post_id",
             ['post_id' => $postId]
         );
     } else {
-        $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count FROM posts p
+        $posts = $db->select("SELECT p.*, u.username, u.nickname, u.profile_picture, COUNT(ul.user_id) as like_count,
+            EXISTS(
+                        SELECT 1
+                        FROM user_likes ul2
+                        WHERE ul2.post_id = p.id
+                        AND ul2.user_id = :current_user_id
+                    ) AS liked_by_me
+            FROM posts p
             INNER JOIN users u ON u.id = p.user_id
             LEFT JOIN user_likes ul ON ul.post_id = p.id
-            GROUP BY p.id, u.username, u.nickname, u.profile_picture ORDER BY p.created_at DESC LIMIT 10");
+            ORDER BY p.created_at DESC",
+            ['current_user_id' => $_SESSION['user_id']]);
     }
 
 

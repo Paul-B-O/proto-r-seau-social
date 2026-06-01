@@ -320,12 +320,12 @@
             $make("div", content, {className: "text", textContent: post.content});
             $make("div", content, {className: "date", textContent: post.created_at});
             const footer = $make("div", content, {className: "tweet-footer"});
-            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `❤️ ${post.like_count}`});
+            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `${post.liked_by_me ? "❤" : "🤍"}️ ${post.like_count}`});
 
             likeBtn.addEventListener("click", async () => {
                 const result = await likePost(post.id);
                 if (result.success) {
-                    likeBtn.textContent = `❤️ ${result.like_count}`;
+                    likeBtn.textContent = `${result.liked_by_me ? "❤" : "🤍"}️ ${result.like_count}`;
                 }
             });
 
@@ -379,9 +379,10 @@
 
         // Actualisation brut à changer
         setInterval(() => {
-            container.innerHTML = ``;
+            const tweets = document.querySelectorAll(".tweet");
+            tweets.forEach(t => t.remove());
             getLastPost();
-        })
+        }, 10_000);
 
     </script>
 

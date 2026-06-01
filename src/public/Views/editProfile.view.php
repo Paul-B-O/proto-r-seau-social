@@ -28,6 +28,8 @@
 
         /* HEADER */
         .header {
+            display: flex;
+            align-items: center;
             padding: 15px 20px;
             border-bottom: 1px solid #eee;
             font-size: 20px;
@@ -131,6 +133,34 @@
             color: gray;
             margin-top: 5px;
         }
+        .errors {
+            margin: 20px;
+            padding: 12px;
+            background: #ffeaea;
+            border: 1px solid #ffbcbc;
+            border-radius: 10px;
+        }
+
+        .errors ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .errors li {
+            color: #c0392b;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+
+        .success {
+            margin: 20px;
+            padding: 12px;
+            background: #eafaf1;
+            border: 1px solid #b7e4c7;
+            border-radius: 10px;
+            color: #2d6a4f;
+            font-size: 14px;
+        }
     </style>
 
 </head>
@@ -142,6 +172,16 @@
 
         <!-- HEADER -->
         <div class="header">
+            <a href="/profile?username=<?= htmlspecialchars($username) ?>"
+               style="
+           text-decoration:none;
+           color:black;
+           margin-right:10px;
+           font-size:22px;
+       ">
+                ←
+            </a>
+
             Modifier le profil
         </div>
 
@@ -152,9 +192,25 @@
         <div class="profile-picture-container">
             <img
                 class="profile-picture"
-                src="https://i.pravatar.cc/150?img=12"
+                src="<?= htmlspecialchars($profilePicture) ?: "/image/default.png" ?>"
             >
         </div>
+
+        <?php if (!empty($errors)): ?>
+            <div class="errors">
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?= htmlspecialchars($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($success)): ?>
+            <div class="success">
+                <?= htmlspecialchars($success) ?>
+            </div>
+        <?php endif; ?>
 
         <!-- FORM -->
         <form class="form" method="POST" enctype="multipart/form-data">
@@ -182,7 +238,7 @@
                 <input
                     type="text"
                     name="nickname"
-                    value="Jean Dupont"
+                    value="<?= htmlspecialchars($user['nickname']) ?>"
                     maxlength="30"
                 >
             </div>
@@ -194,7 +250,7 @@
                 <input
                     type="text"
                     name="username"
-                    value="jean"
+                    value="<?= htmlspecialchars($username) ?>"
                     maxlength="30"
                 >
             </div>
@@ -206,7 +262,7 @@
                 <textarea
                     name="bio"
                     maxlength="280"
-                >Développeur web PHP • Passionné de backend 🚀</textarea>
+                ><?= $bio ?></textarea>
 
                 <div class="small">
                     280 caractères maximum

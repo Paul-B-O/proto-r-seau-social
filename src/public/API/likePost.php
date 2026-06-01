@@ -67,16 +67,23 @@ try {
 
 
     $like_count = $db->select("SELECT COUNT(*) as like_count FROM user_likes WHERE post_id = :postId", ['postId' => $postId])[0]["like_count"];
+    $liked_by_me = $db->select("SELECT EXISTS (
+                        SELECT 1
+                        FROM user_likes ul2
+                        WHERE ul2.post_id = :post_id
+                        AND ul2.user_id = :current_user_id
+                    ) AS liked_by_me", ["current_user_id" => $_SESSION["user_id"], "post_id" => $postId])[0]["liked_by_me"];
 
     echo json_encode([
         'success' => true,
-        'like_count' => $like_count
+        'like_count' => $like_count,
+        "liked_by_me" => $liked_by_me
     ]);
 
 } catch (Exception $e) {
 
     echo json_encode([
         'success' => false,
-        'error' => 'Erreur serveur'
+        'error' => 'Erreur serveur'.$e->getMessage()
     ]);
 }

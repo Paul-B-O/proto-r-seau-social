@@ -75,7 +75,7 @@ a:hover {
 Le profil que vous cherchez n'existe pas ou a été supprimé.
     </p>
 
-    <a href="/home.php">Retour à l'accueil</a>
+    <a href="/home">Retour à l'accueil</a>
 
 </div>
 

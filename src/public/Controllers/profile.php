@@ -27,6 +27,7 @@ $result = $db->select(
         id,
         username,
         nickname,
+        bio,
         profile_picture,
         created_at
      FROM users

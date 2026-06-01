@@ -204,7 +204,19 @@
     <!-- CENTRE -->
     <div class="container">
 
-        <header>Profil</header>
+        <header>
+
+            <a href="/home"
+               style="
+           text-decoration:none;
+           color:black;
+           margin-right:10px;
+           font-size:22px;
+       ">
+                ←
+            </a>
+            Profil
+        </header>
 
         <!-- COVER -->
         <div class="cover"></div>
@@ -216,26 +228,29 @@
 
                 <img
                     class="profile-picture"
-                    src="<?= $user['profile_picture'] ?? "/image/default.png" ?>"
+                    src="<?= htmlspecialchars($user['profile_picture']) ?: "/imagew/default.png" ?>"
                 >
 
-                <?php if ($_SESSION['id'] === $user['id']) : ?>
+                <?php if ($_SESSION['user_id'] == $user['id']):  ?>
+                <a href="/editProfile?username=<?= htmlspecialchars($user['username']) ?>">
                 <button class="edit-btn">
                     Modifier le profil
                 </button>
+                </a>
                 <?php endif; ?>
 
             </div>
 
             <div class="nickname">
-                <?= $user['nickname'] ?>
+                <?= htmlspecialchars($user['nickname']) ?>
             </div>
 
             <div class="username">
-                @<?= $user['username'] ?>
+                @<?= htmlspecialchars($user['username']) ?>
             </div>
 
             <div class="bio">
+                <?= htmlspecialchars($user['bio']) ?>
             </div>
 
             <div class="profile-stats" style="display: none">
@@ -271,16 +286,30 @@
             $make("div", content, {className: "text", textContent: post.content});
             $make("div", content, {className: "date", textContent: post.created_at});
             const footer = $make("div", content, {className: "tweet-footer"});
-            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `❤️ ${post.like_count}`});
+            const likeBtn = $make("button", footer, {className: "like-btn", textContent: `${post.liked_by_me ? "❤" : "🤍"}️ ${post.like_count}`});
 
             likeBtn.addEventListener("click", async () => {
                 const result = await likePost(post.id);
                 if (result.success) {
-                    likeBtn.textContent = `❤️ ${result.like_count}`;
+                    likeBtn.textContent = `${result.liked_by_me ? "❤" : "🤍"}️ ${result.like_count}`;
+                } else {
+                    console.log(result)
                 }
             });
 
             return postDiv;
+        }
+
+        async function likePost(postId) {
+            const res = await fetch("api/likePost",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ postId })
+            });
+
+            return await res.json();
         }
 
         async function getLastPost() {
