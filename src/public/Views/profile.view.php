@@ -260,7 +260,6 @@
 
         </div>
 
-        <!-- POSTS -->
     <script>
 
         const container = document.querySelector(".container");

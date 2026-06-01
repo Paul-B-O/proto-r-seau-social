@@ -261,10 +261,10 @@
         <div class="tweet-form">
 
             <div class="tweet-box">
-                <textarea placeholder="Quoi de neuf ?"></textarea>
+                <textarea placeholder="Quoi de neuf ?" maxlength="280"></textarea>
 
                 <div class="tweet-actions">
-                    <span style="color:gray;font-size:12px;">0/280</span>
+                    <span style="color:gray;font-size:12px;"><span id="charCounter">0</span>/280</span>
                     <button>Tweet</button>
                 </div>
             </div>
@@ -290,6 +290,7 @@
         const tweetBox = document.querySelector(".tweet-box textarea");
         const sendBtn = document.querySelector(".tweet-actions button");
         const container = document.querySelector(".container");
+        const charCounter = document.querySelector("#charCounter");
 
         sendBtn.addEventListener("click", async () => {
             const content = tweetBox.value;
@@ -308,6 +309,14 @@
                 const post = await getNewPost();
                 container.insertBefore(makePost(post), container.children[3]);
             }
+        });
+
+        tweetBox.addEventListener("input", (event) => {
+            if (tweetBox.value.length >= tweetBox.value.length) {
+                event.preventDefault();
+                tweetBox.value = tweetBox.value.substring(0, 280);
+            }
+            charCounter.textContent = tweetBox.value.length;
         });
 
         function makePost(post) {
