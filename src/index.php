@@ -34,13 +34,28 @@ if ($type === "favicon.ico")
     exit;
 
 switch ($type) {
+
     case "api":
         $controller->api($type, $path);
         break;
+
     case "image":
         $controller->image($path ?: 'index');
         break;
+
+    case "css":
+        $controller->css($path);
+        break;
+
+    case "js":
+        $controller->js($path);
+        break;
+
+    case "common":
+        $controller->common($path);
+        break;
+        
     default:
         $fullPath = $uri ?: 'home';
-        $controller->view($fullPath);
+        $controller->view($type, $fullPath);
 }

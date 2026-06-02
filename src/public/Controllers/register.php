@@ -67,4 +67,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-require_once ROOT."/src/public/Views/register.view.php";
+require_once ROOT . "/src/public/Views/register/register.view.php";

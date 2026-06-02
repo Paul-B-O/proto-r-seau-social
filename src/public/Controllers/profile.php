@@ -79,4 +79,4 @@ $posts = $db->select(
 );
 
 
-require_once ROOT . "/src/public/Views/profile.view.php";
+require_once ROOT . "/src/public/Views/profile/profile.view.php";

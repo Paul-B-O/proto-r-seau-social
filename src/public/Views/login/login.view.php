@@ -100,7 +100,7 @@
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="login">
+        <form method="POST" action="">
 
             <input type="text" name="identifier" placeholder="Identifiant" required>
 
@@ -111,7 +111,7 @@
         </form>
 
         <div class="switch">
-            <a href="register">
+            <a href="../register">
             Pas encore de compte ?
             </a>
         </div>

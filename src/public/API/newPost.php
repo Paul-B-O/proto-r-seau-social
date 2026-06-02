@@ -46,9 +46,27 @@ try {
         ]
     );
 
+    $post = $db->select("SELECT p.*, u.nickname, u.username, u.profile_picture,
+       (
+            SELECT COUNT(*)
+            FROM user_likes ul
+            WHERE ul.post_id = p.id
+        ) AS like_count,
+
+        EXISTS(
+            SELECT 1
+            FROM user_likes ul2
+            WHERE ul2.post_id = p.id
+            AND ul2.user_id = :current_user_id
+        ) AS liked_by_me
+
+        FROM posts p
+        INNER JOIN users u ON p.user_id = u.id
+        WHERE p.id = :id", ["id" => $postId, "current_user_id" => $_SESSION['user_id']]);
+
     echo json_encode([
         'success' => true,
-        'post_id' => $postId
+        'post' => $post[0]
     ]);
 
 } catch (Exception $e) {

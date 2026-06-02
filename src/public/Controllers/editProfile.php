@@ -218,4 +218,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once ROOT . "/src/public/Views/editProfile.view.php";
+require_once ROOT . "/src/public/Views/editProfile/editProfile.view.php";

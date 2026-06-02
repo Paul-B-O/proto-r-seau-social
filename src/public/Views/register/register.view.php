@@ -102,7 +102,7 @@
     <div class="card">
         <h2>Créer un compte</h2>
 
-        <form method="POST" action="register">
+        <form method="POST" action="">
 
             <input type="text" name="nickname" placeholder="Pseudo" required>
 

@@ -46,5 +46,5 @@ $profilePicture = $user['profile_picture'];
 $createdAt = $user['created_at'];
 
 
-require_once ROOT."/src/public/Views/home.view.php";
+require_once ROOT . "/src/public/Views/home/home.view.php";
 
