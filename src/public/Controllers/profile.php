@@ -52,31 +52,5 @@ $bio = $user['bio'];
 $profilePicture = $user['profile_picture'];
 $createdAt = $user['created_at'];
 
-$posts = $db->select(
-    "SELECT
-        p.id,
-        p.content,
-        p.created_at,
-
-        COUNT(ul.user_id) AS like_count
-
-     FROM posts p
-
-     LEFT JOIN user_likes ul
-        ON ul.post_id = p.id
-
-     WHERE p.user_id = :id
-
-     GROUP BY
-        p.id,
-        p.content,
-        p.created_at
-
-     ORDER BY p.created_at DESC LIMIT 20",
-    [
-        'id' => $id
-    ]
-);
-
 
 require_once ROOT . "/src/public/Views/profile/profile.view.php";
