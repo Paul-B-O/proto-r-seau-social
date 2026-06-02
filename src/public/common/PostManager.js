@@ -1,5 +1,5 @@
 import Api from "/common/Api.js";
-import {$make} from "/common/dom.js"
+import {$make, $show} from "/common/dom.js"
 
 class PostManager {
 
@@ -41,18 +41,21 @@ class PostManager {
 
     async getLastPosts() {
         const params = this.username ? {username: this.username} : {};
-        const { posts, success, isAdmin } = await this.#api.getPost(params);
+        const {posts, success, isAdmin} = await this.#api.getPost(params);
 
         if (success) {
             this.lastPost = posts[0];
             this.isAdmin = isAdmin;
+            if (this.isAdmin && !this.username) {
+                $show(".admin", isAdmin);
+            }
             posts.forEach((p) => this.appendPost(this.createPost(p)));
         }
     }
 
     async getNewPost() {
-        const { success, posts } = await this.#api.getPost({ after: this.lastPost.created_at });
-         if (posts.length <= 0) return;
+        const {success, posts} = await this.#api.getPost({after: this.lastPost.created_at});
+        if (posts.length <= 0) return;
 
 
         if (success) {
@@ -69,7 +72,17 @@ class PostManager {
         const user = $make("div", content, {className: "user", textContent: post.nickname});
         $make("span", user, {className: "username", textContent: `@${post.username}`});
         $make("div", content, {className: "text", textContent: post.content});
-        $make("div", content, {className: "date", textContent: post.created_at});
+        const date = new Date(post.created_at);
+
+        const formatted = date.toLocaleString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        $make("div", content, {className: "date", textContent: formatted});
         const footer = $make("div", content, {className: "tweet-footer"});
         const likeBtn = $make("button", footer, {
             className: "like-btn",

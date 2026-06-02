@@ -152,6 +152,7 @@ header {
 
 .tweet-content {
     flex: 1;
+    min-width: 0;
 }
 
 .user {
@@ -166,8 +167,9 @@ header {
 
 .text {
     margin-top: 5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
-
 .date {
     margin-top: 6px;
     font-size: 12px;

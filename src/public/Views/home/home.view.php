@@ -27,9 +27,13 @@
 
             <div class="menu">
 
+                <a href="admin" class="admin" hidden>
+                    <button>Admin</button>
+                </a>
                 <a href="logout">
                     <button>Déconnexion</button>
                 </a>
+
             </div>
 
         </div>
