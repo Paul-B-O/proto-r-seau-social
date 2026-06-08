@@ -147,6 +147,10 @@ header {
     border-bottom: 1px solid #eee;
 }
 
+.tweet:hover {
+    background: #fafafa;
+}
+
 .avatar {
     width: 45px;
     height: 45px;

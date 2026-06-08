@@ -1,0 +1,192 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f8fa;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 650px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Header */
+
+.header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.search-box {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    font-size: 15px;
+    background: #f7f9fa;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #1da1f2;
+    background: white;
+}
+
+/* Tabs */
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #536471;
+    transition: background .2s;
+}
+
+.tab:hover {
+    background: #f7f9fa;
+}
+
+.tab.active {
+    color: black;
+    border-bottom: 3px solid #1da1f2;
+}
+
+/* Results */
+
+.results {
+    min-height: 400px;
+}
+
+/* Posts */
+.tweet {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.tweet:hover {
+    background: #fafafa;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.tweet-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.user {
+    font-weight: bold;
+}
+
+.user span {
+    color: gray;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.text {
+    margin-top: 5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.date {
+    margin-top: 8px;
+    color: gray;
+    font-size: 12px;
+}
+
+.tweet-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.like-btn {
+    border: none;
+    background: none;
+    color: gray;
+    cursor: pointer;
+}
+
+.like-btn:hover {
+    color: red;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
+
+
+/* Users */
+
+.user-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.user-card:hover {
+    background: #fafafa;
+}
+
+.user-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.follow-btn {
+    border: none;
+    background: black;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Empty */
+
+.empty {
+    text-align: center;
+    color: gray;
+    padding: 50px 20px;
+}

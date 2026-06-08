@@ -49,6 +49,7 @@
             <div class="tweet-box">
                 <textarea placeholder="Quoi de neuf ?" maxlength="280"></textarea>
 
+                <input hidden type="text" value="<?= $_SESSION['token'] ?>" id="token">
                 <div class="tweet-actions">
                     <span style="color:gray;font-size:12px;"><span id="charCounter">0</span>/280</span>
                     <button>Tweet</button>

@@ -24,8 +24,8 @@ class Api {
         return await this.fetch(url, "POST", body);
     }
 
-    async newPost(content) {
-        return await this.post("newPost", { content });
+    async newPost(content, token) {
+        return await this.post("newPost", { content, token });
     }
 
     async likePost(postId){

@@ -8,4 +8,4 @@ const postManager = new PostManager(
     (elt) => container.prepend(elt),
     username
 );
-
+postManager.init();

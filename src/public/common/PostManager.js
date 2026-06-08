@@ -1,5 +1,5 @@
 import Api from "/common/Api.js";
-import {$make, $show} from "/common/dom.js"
+import { $, $make, $show } from "/common/dom.js"
 
 class PostManager {
 
@@ -11,7 +11,9 @@ class PostManager {
         this.appendPost = appendPost;
         this.prependPost = prependPost;
         this.username = username;
+    }
 
+    init() {
         this.getLastPosts();
         setInterval(this.getNewPost.bind(this), 10_000);
     }
@@ -20,8 +22,8 @@ class PostManager {
         return await this.#api.getPost({postId});
     }
 
-    async sendPost(content) {
-        const res = await this.#api.newPost(content);
+    async sendPost(content, token) {
+        const res = await this.#api.newPost(content, token);
         if (res.success) {
             this.lastPost = res.post;
             const newPost = this.createPost(res.post);
@@ -47,7 +49,7 @@ class PostManager {
             this.lastPost = posts[0];
             this.isAdmin = isAdmin;
             if (this.isAdmin && !this.username) {
-                $show(".admin", isAdmin);
+                $(".admin") && $show(".admin", isAdmin);
             }
             posts.forEach((p) => this.appendPost(this.createPost(p)));
         }

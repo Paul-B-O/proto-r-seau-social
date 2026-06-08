@@ -36,6 +36,10 @@ if (empty($result)) {
     exit;
 }
 
+$p = new OAuthProvider([]);
+$token = $p->generateToken(4);
+$_SESSION['token'] = $token;
+
 $user = $result[0];
 
 $id = $user['id'];

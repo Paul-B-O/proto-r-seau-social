@@ -13,11 +13,13 @@ const postManager = new PostManager(
     (elt) => container.appendChild(elt),
     (elt) => container.insertBefore(elt, container.children[3])
 );
+postManager.init();
 
 
 async function sendPost() {
     const content = tweetBox.value;
-    const success = await postManager.sendPost(content);
+    const token = $("#token").value;
+    const success = await postManager.sendPost(content, token);
 
     if (success) {
         tweetBox.value = "";
@@ -35,3 +37,6 @@ async function onInput(event){
 
 sendBtn.addEventListener("click", sendPost);
 tweetBox.addEventListener("input", onInput);
+tweetBox.addEventListener("key", (key) => {
+
+})

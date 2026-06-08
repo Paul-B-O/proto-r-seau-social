@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Profil</title>
+    <title>Profil de <?= $user["username"]?></title>
 
     <link href="/css/profile" rel="stylesheet">
     <script src="js/profile" type="module" defer></script>

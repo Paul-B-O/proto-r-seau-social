@@ -14,8 +14,18 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 $data = json_decode(file_get_contents("php://input"), true);
+
+if ($_SESSION['token'] != $data["token"]) {
+    echo json_encode([
+        'success' => false,
+        'error' => 'Token invalide'
+    ]);
+    exit;
+}
+
+
+$db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 
 $content = trim($data['content'] ?? '');
 
