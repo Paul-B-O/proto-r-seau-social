@@ -8,6 +8,7 @@ define("ROOT", dirname(__DIR__));
 
 require_once ROOT . "/src/config/database.php";
 require_once ROOT . "/src/Utils/Autoload.php";
+require_once ROOT . "/src/Utils/functions.php";
 
 Autoloader::addPath("Database", ROOT . "/Database");
 Autoloader::addPath("core", ROOT . "/core");
