@@ -27,6 +27,11 @@
 
             <div class="menu">
 
+                <div hidden>
+                    <input placeholder="Recherher" type="text" id="search">
+                    <button>Valider</button>
+                </div>
+
                 <a href="admin" class="admin" hidden>
                     <button>Admin</button>
                 </a>

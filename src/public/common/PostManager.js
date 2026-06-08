@@ -97,7 +97,7 @@ class PostManager {
         });
 
         if (post.isMyPost || this.isAdmin) {
-            const deleteButton = $make("button", user, {className: "delete-btn", textContent: "🗑"});
+            const deleteButton = $make("button", user, {className: "delete-btn", textContent: "🗑", title: "Supprimer le post"});
             deleteButton.addEventListener("click", async () => {
                 if (confirm("Vous êtes sur le point de supprimer ce post, êtes vous sûr.e ?")) {
                     const result = await this.deletePost(post.id);
